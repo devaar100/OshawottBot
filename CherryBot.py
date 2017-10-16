@@ -1,13 +1,18 @@
 from flask import Flask , request
 from modules.greet import *
+from modules.jokes import *
 import telegram
 
 app = Flask(__name__)
 
 def handle(msg):
+    print msg
     txt = msg.text
-    print(msg)
-    bot.sendMessage(chat_id=msg.chat.id, text=welcome())
+    if txt == '/start':
+        bot.sendMessage(chat_id=msg.chat.id, text = welcome())
+    elif txt == '/jokes':
+        bot.sendMessage(chat_id=msg.chat.id, text = rand_jokes())
+    return "Ok"
 
 bot = telegram.Bot(token='452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88')
 

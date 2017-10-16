@@ -10,3 +10,10 @@ def suggestions(data):
     file.write(data + '\n')
     file.close()
     return "Thanks for the input"
+
+
+def getBugData():
+    file = open("bugs.txt",'r')
+    txt = file.read()
+    file.close()
+    return txt

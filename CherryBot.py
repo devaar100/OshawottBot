@@ -14,15 +14,25 @@ def handle(msg):
     elif txt[0] == '/jokes':
         bot.sendMessage(chat_id=msg.chat.id, text = rand_jokes())
     elif txt[0] == '/bugs':
-        bug(txt[1])
+        if (txt[1] != None):
+            bug(txt[1])
+            bot.sendMessage(chat_id=msg.chat.id, text="Thanks for the help")
+        else:
+            bot.sendMessage(chat_id=msg.chat.id, text="Use format /bugs Bug-Issue")
     elif txt[0] == '/suggestions':
-        suggestions(txt[1])
+        if(txt[1]!=None):
+            suggestions(txt[1])
+            bot.sendMessage(chat_id=msg.chat.id,text= "Thanks for the input")
+        else:
+            bot.sendMessage(chat_id=msg.chat.id,text= "Use format /suggestions Yout-Suggestion")
     elif txt[0] == '/memes':
         resp = rand_memes()
         if resp=="done":
             file = open("meme.jpg", 'rb')
             bot.sendPhoto(msg.chat.id, file)
             file.close()
+    elif txt[0] == '/bugdata':
+        bot.sendMessage(chat_id=msg.chat.id, text= getBugData())
     return "Ok"
 
 

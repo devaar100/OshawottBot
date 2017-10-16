@@ -35,6 +35,7 @@ def hello_world():
 def work():
     if request.method == 'POST':
         update = telegram.Update.de_json(request.get_json(force=True), bot)
+        print(update)
         if update is None:
             return "Show me your TOKEN please!"
         handle(update.message)

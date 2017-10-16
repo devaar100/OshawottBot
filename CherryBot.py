@@ -1,17 +1,28 @@
 from flask import Flask , request
 from modules.greet import *
 from modules.jokes import *
+from modules.feedback import *
 import telegram
 
 app = Flask(__name__)
 
 def handle(msg):
     print(msg)
-    txt = msg.text
-    if txt == '/start':
+    txt = msg.text.split(' ')
+    if txt[0] == '/start':
         bot.sendMessage(chat_id=msg.chat.id, text = welcome())
-    elif txt == '/jokes':
+    elif txt[0] == '/jokes':
         bot.sendMessage(chat_id=msg.chat.id, text = rand_jokes())
+    elif txt[0] == '/bugs':
+        bug(txt[1])
+    elif txt[0] == '/suggestion':
+        suggestions(txt[1])
+    elif txt[0] == '/memes':
+        resp = rand_memes()
+        if resp=="done":
+            file = open("meme.jpg", 'rb')
+            bot.sendPhoto(msg.chat.id, file)
+            file.close()
     return "Ok"
 
 bot = telegram.Bot(token='452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88')
@@ -26,7 +37,6 @@ def work():
         update = telegram.Update.de_json(request.get_json(force=True), bot)
         if update is None:
             return "Show me your TOKEN please!"
-        print(update.message)
         handle(update.message)
     return "Ok"
 

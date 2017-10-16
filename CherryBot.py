@@ -1,26 +1,15 @@
 from flask import Flask , request
 from modules.greet import *
-import telepot
-import os
-import sys
-from telepot.loop import MessageLoop
+import telegram
 
 app = Flask(__name__)
 
-TOKEN = sys.argv[1]
-PORT = int(sys.argv[2])
-#URL =  os.environ['URL']
-
 def handle(msg):
-    content_type, chat_type, chat_id = telepot.glance(msg)
-    print(content_type, chat_type, chat_id)
+    txt = msg.text
+    print msg
+    bot.sendMessage(chat_id=msg.chat.id, text=txt)
 
-    if content_type == 'text':
-        bot.sendMessage(chat_id,"Yo")
-
-
-bot = telepot.Bot(TOKEN)
-MessageLoop(bot, handle).run_as_thread()
+bot = telegram.Bot(token='452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88')
 
 @app.route('/')
 def hello_world():
@@ -28,8 +17,12 @@ def hello_world():
 
 @app.route('/work',methods=['POST','GET'])
 def work():
-    handle(request.data)
+    if request.method == 'POST':
+        update = telegram.Update.de_json(request.get_json(force=True), bot)
+        if update is None:
+            return "Show me your TOKEN please!"
+        handle(update.message)
     return "Ok"
 
 if __name__ == '__main__':
-    app.run(port = PORT , debug = True)
+    app.run(host='0.0.0.0' , debug = True)

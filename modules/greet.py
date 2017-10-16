@@ -7,4 +7,4 @@ What can I do for you ?
 """
 
 def welcome():
-    return welcome
+    return welcome_msg

@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def handle(msg):
     txt = msg.text
-    print msg
+    print(msg)
     bot.sendMessage(chat_id=msg.chat.id, text=txt)
 
 bot = telegram.Bot(token='452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88')

@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 TOKEN = sys.argv[1]
 PORT = int(sys.argv[2])
-URL = os.environ['URL']
+#URL = os.environ['URL']
 
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)

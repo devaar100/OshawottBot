@@ -9,14 +9,14 @@ app = Flask(__name__)
 
 TOKEN = sys.argv[1]
 PORT = int(sys.argv[2])
-#URL = os.environ['URL']
+URL =  os.environ['URL']
 
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
 
     if content_type == 'text':
-        bot.sendMessage(chat_id, welcome())
+        bot.sendMessage(chat_id,"Yo")
 
 
 bot = telepot.Bot(TOKEN)
@@ -26,10 +26,10 @@ MessageLoop(bot, handle).run_as_thread()
 def hello_world():
     return 'Hello World!'
 
-@app.route('/work', methods=['POST','GET'])
+@app.route('/work',methods=['POST','GET'])
 def work():
     handle(request.data)
-    return "ok"
+    return "Ok"
 
 if __name__ == '__main__':
     app.run(port = PORT , debug = True)

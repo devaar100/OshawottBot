@@ -26,7 +26,7 @@ def work():
         update = telegram.Update.de_json(request.get_json(force=True), bot)
         if update is None:
             return "Show me your TOKEN please!"
-        print update.message
+        print(update.message)
         handle(update.message)
     return "Ok"
 

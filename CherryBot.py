@@ -6,7 +6,7 @@ import telegram
 app = Flask(__name__)
 
 def handle(msg):
-    print msg
+    print(msg)
     txt = msg.text
     if txt == '/start':
         bot.sendMessage(chat_id=msg.chat.id, text = welcome())

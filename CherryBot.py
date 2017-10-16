@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def handle(msg):
     print(msg)
-    txt = msg.text.split(' ')
+    txt = msg.text.split(' ',1)
     if txt[0] == '/start':
         bot.sendMessage(chat_id=msg.chat.id, text = welcome())
     elif txt[0] == '/jokes':
@@ -33,6 +33,9 @@ def handle(msg):
             file.close()
     elif txt[0] == '/bugdata':
         bot.sendMessage(chat_id=msg.chat.id, text= getBugData())
+    elif txt[0] == '/sugdata':
+        bot.sendMessage(chat_id=msg.chat.id, text= getSuggestionData())
+
     return "Ok"
 
 

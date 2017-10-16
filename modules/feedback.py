@@ -17,3 +17,9 @@ def getBugData():
     txt = file.read()
     file.close()
     return txt
+
+def getSuggestionData():
+    file = open("suggestions.txt",'r')
+    txt = file.read()
+    file.close()
+    return txt

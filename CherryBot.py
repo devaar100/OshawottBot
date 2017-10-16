@@ -26,6 +26,10 @@ MessageLoop(bot, handle).run_as_thread()
 def hello_world():
     return 'Hello World!'
 
+@app.route('/work', methods=['POST','GET'])
+def work():
+    handle(request.data)
+    return "ok"
 
 if __name__ == '__main__':
     bot.setWebhook(URL)

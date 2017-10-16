@@ -14,13 +14,13 @@ def handle(msg):
     elif txt[0] == '/jokes':
         bot.sendMessage(chat_id=msg.chat.id, text = rand_jokes())
     elif txt[0] == '/bugs':
-        if (txt[1] != None):
+        if (len(txt)!=1):
             bug(txt[1])
             bot.sendMessage(chat_id=msg.chat.id, text="Thanks for the help")
         else:
             bot.sendMessage(chat_id=msg.chat.id, text="Use format /bugs Bug-Issue")
     elif txt[0] == '/suggestions':
-        if(txt[1]!=None):
+        if(len(txt)!=1):
             suggestions(txt[1])
             bot.sendMessage(chat_id=msg.chat.id,text= "Thanks for the input")
         else:

@@ -1,1 +1,1 @@
-web: gunicorn app:CherryBot $PORT
+web: gunicorn CherryBot:app $PORT

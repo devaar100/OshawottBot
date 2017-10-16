@@ -15,7 +15,7 @@ def handle(msg):
         bot.sendMessage(chat_id=msg.chat.id, text = rand_jokes())
     elif txt[0] == '/bugs':
         bug(txt[1])
-    elif txt[0] == '/suggestion':
+    elif txt[0] == '/suggestions':
         suggestions(txt[1])
     elif txt[0] == '/memes':
         resp = rand_memes()

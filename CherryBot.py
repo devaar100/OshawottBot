@@ -25,11 +25,14 @@ def handle(msg):
             file.close()
     return "Ok"
 
+
 bot = telegram.Bot(token='452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88')
+
 
 @app.route('/')
 def hello_world():
     return 'Hello World!'
+
 
 @app.route('/work',methods=['POST','GET'])
 def work():
@@ -40,6 +43,7 @@ def work():
             return "Show me your TOKEN please!"
         handle(update.message)
     return "Ok"
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0' , debug = True)

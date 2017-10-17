@@ -89,6 +89,12 @@ def handle(msg):
             fin_resp = find_song(txt[1])
             for i in fin_resp[:3]:
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
+                keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
+                    [InlineKeyboardButton(text='Download 1st option', callback_data=str(0)+" dwn_song")],
+                    [InlineKeyboardButton(text='Download 2nd option', callback_data=str(1)+" dwn_song")],
+                    [InlineKeyboardButton(text='Download 3rd option', callback_data=str(2)+" dwn_song")]
+                ])
+                bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
             fin_resp=''
         else:
             fin_resp = "Please provide songname"
@@ -109,10 +115,16 @@ def callback_query(msg):
             [InlineKeyboardButton(text='More News', callback_data="norenews")]
         ])
         bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
+    else:
+        bot.answerCallbackQuery(from_id, text="Donwloading your song")
+        name = download_song(query_data.split(' ')[0])
+        song = open(name,'rb')
+        bot.sendAudio(chat_id= from_id, audio= song)
+        song.close()
 
 
-TOKEN = "452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #os.environ['TOKEN']#
-#URL = os.environ['URL']
+TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #
+URL = os.environ['URL']
 bot = telepot.Bot(token=TOKEN)
 
 inc_upd_queue = Queue() #queue to handle all incoming updates
@@ -132,5 +144,5 @@ def work():
 
 
 if __name__ == '__main__':
-    #bot.setWebhook(URL)
+    bot.setWebhook(URL)
     app.run(host='0.0.0.0' , debug = True)

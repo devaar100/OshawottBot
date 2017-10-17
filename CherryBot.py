@@ -1,3 +1,5 @@
+import telepot , random
+from Queue import Queue
 from flask import Flask , request
 from modules.greet import *
 from modules.jokes import *
@@ -7,11 +9,11 @@ from modules.news import *
 from modules.wiki import *
 from modules.quotes import *
 from telepot.namedtuple import *
-import telegram
 import os
 
 
 app = Flask(__name__)
+
 
 def handle(msg):
     print(msg)
@@ -55,7 +57,7 @@ def handle(msg):
         for i in range(3):
             bot.sendMessage(msg.chat.id, fin_resp[i])
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text='More News', callback_data="newsMore")]
+            [InlineKeyboardButton(text='More News', callback_data="morenews")]
         ])
         bot.sendMessage(msg.chat.id, 'Load More', reply_markup=keyboardNews)
         fin_resp = "Press Above To Load More News"
@@ -70,9 +72,25 @@ def handle(msg):
     return "Ok"
 
 
+def callback_query(msg):
+    query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
+    if query_data == "morenews":
+        bot.answerCallbackQuery(query_id, text='Loading More News')
+        response = get_news()
+        bot.sendMessage(from_id, random.choice(response).text)
+
+        keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text='More News', callback_data="norenews")]
+        ])
+        bot.sendMessage(from_id, 'Load More', reply_markup=keyboardNews)
+
+
 TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #
 URL = os.environ['URL']
-bot = telegram.Bot(token=TOKEN)
+bot = telepot.Bot(token=TOKEN)
+
+inc_upd_queue = Queue() #queue to handle all incoming updates
+bot.message_loop({'chat': handle, 'callback_query': callback_query}, source=inc_upd_queue)
 
 
 @app.route('/')
@@ -83,8 +101,7 @@ def hello_world():
 @app.route('/work',methods=['POST','GET'])
 def work():
     if request.method == 'POST':
-        update = telegram.Update.de_json(request.get_json(force=True), bot)
-        handle(update.message)
+        inc_upd_queue.put(request.data)
     return "Ok"
 
 

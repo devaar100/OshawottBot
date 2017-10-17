@@ -80,7 +80,7 @@ def callback_query(msg):
     if query_data == "morenews":
         bot.answerCallbackQuery(user_id, text='Loading More News')
         response = get_news()[2:]
-        bot.sendMessage(user_id, random.choice(response).text)
+        bot.sendMessage(user_id, random.choice(response))
 
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="norenews")]

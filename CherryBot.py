@@ -78,7 +78,7 @@ def handle(msg):
 
 def callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
-    print(query_id+" "+from_id+" "+query_data)
+    print(str(query_id)+" "+str(from_id)+" "+str(query_data))
     if query_data == "morenews":
         bot.answerCallbackQuery(query_id, text='Loading More News')
         response = get_news()[2:]

@@ -62,7 +62,8 @@ def handle(msg):
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="morenews")]
         ])
-        bot.sendMessage(msg['chat']['id'],text="Click above button for more NEWS", reply_markup=keyboardNews)
+        bot.sendMessage(msg['chat']['id'],text="Click below for more", reply_markup=keyboardNews)
+        fin_resp=''
     elif txt[0] == '/wiki':
         if len(txt) != 1:
             fin_resp=get_wiki(txt[1])
@@ -76,16 +77,17 @@ def handle(msg):
 
 
 def callback_query(msg):
-    user_id, query_data = telepot.glance(msg, flavor='callback_query')
+    query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
+    print(query_id+" "+from_id+" "+query_data)
     if query_data == "morenews":
-        bot.answerCallbackQuery(user_id, text='Loading More News')
+        bot.answerCallbackQuery(query_id, text='Loading More News')
         response = get_news()[2:]
-        bot.sendMessage(user_id, random.choice(response))
+        bot.sendMessage(from_id, random.choice(response))
 
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="norenews")]
         ])
-        bot.sendMessage(chat_id= user_id,text="Click above button for more NEWS", reply_markup=keyboardNews)
+        bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
 
 
 TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #

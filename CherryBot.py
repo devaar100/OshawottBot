@@ -91,9 +91,9 @@ def handle(msg):
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
 
             keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text='Download 1st option', callback_data=str(0)+" dwn_song")],
-                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(1)+" dwn_song")],
-                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(2)+" dwn_song")]
+                [InlineKeyboardButton(text='Download 1st option',url= fin_resp[0] ,callback_data=str(0)+" dwn_song")],
+                [InlineKeyboardButton(text='Download 2nd option',url= fin_resp[0] , callback_data=str(1)+" dwn_song")],
+                [InlineKeyboardButton(text='Download 3rd option',url= fin_resp[0] , callback_data=str(2)+" dwn_song")]
             ])
             bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
         fin_resp=''
@@ -118,15 +118,16 @@ def callback_query(msg):
         ])
         bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
     else:
-        bot.answerCallbackQuery(callback_query_id=query_id, text="Donwloading your song")
+        bot.answerCallbackQuery(callback_query_id=query_id, text="Fetching your song")
         name = download_song(query_data.split(' ')[0])
+        bot.answerCallbackQuery(callback_query_id=query_id, text="Donwloading your song")
         song = open(name,'rb')
         bot.sendAudio(chat_id= from_id, audio= song)
         song.close()
 
 
-TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #
-URL = os.environ['URL']
+TOKEN = "452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #os.environ['TOKEN']#
+#URL = os.environ['URL']
 bot = telepot.Bot(token=TOKEN)
 
 inc_upd_queue = Queue() #queue to handle all incoming updates
@@ -135,6 +136,7 @@ bot.message_loop({'chat': handle, 'callback_query': callback_query}, source=inc_
 
 @app.route('/')
 def hello_world():
+    get_quotes()
     return 'Hello World!'
 
 
@@ -146,5 +148,5 @@ def work():
 
 
 if __name__ == '__main__':
-    bot.setWebhook(URL)
+    #bot.setWebhook(URL)
     app.run(host='0.0.0.0' , debug = True)

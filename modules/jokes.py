@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup as BS
 import requests, random
 
 
-def rand_jokes():
+def get_jokes():
     jokeurl = 'https://www.rd.com/jokes/family/'
     res = requests.get(jokeurl)
     soup = BS(res.text,'html.parser')
@@ -10,7 +10,7 @@ def rand_jokes():
     return random.choice(result).text
 
 
-def rand_memes():
+def get_memes():
     memeurl = 'http://www.quickmeme.com/'
     res = requests.get(memeurl)
     soup = BS(res.text,'html.parser')

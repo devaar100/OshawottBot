@@ -3,52 +3,67 @@ from modules.greet import *
 from modules.jokes import *
 from modules.feedback import *
 from modules.url import *
+from modules.news import *
+from modules.wiki import *
+from modules.quotes import *
 import telegram
 import os
+
 
 app = Flask(__name__)
 
 def handle(msg):
     print(msg)
     txt = msg.text.split(' ',1)
+    fin_resp = ''
     if txt[0] == '/start':
-        bot.sendMessage(chat_id=msg.chat.id, text = welcome())
+        fin_resp = welcome()
     elif txt[0] == '/jokes':
-        bot.sendMessage(chat_id=msg.chat.id, text = rand_jokes())
+        fin_resp = get_jokes()
     elif txt[0] == '/bugs':
-        if (len(txt)!=1):
+        if len(txt) != 1:
             bug(txt[1])
             bot.sendMessage(chat_id=447553922, text=txt[1])
-            bot.sendMessage(chat_id=msg.chat.id, text="Thanks for the help")
+            fin_resp="Thanks for the help"
         else:
-            bot.sendMessage(chat_id=msg.chat.id, text="Please use following format\n/bugs Bug-Issue")
+            fin_resp = "Please use following format\n/bugs Bug-Issue"
     elif txt[0] == '/suggestions':
-        if(len(txt)!=1):
+        if(len(txt) != 1):
             suggestions(txt[1])
             bot.sendMessage(chat_id=447553922, text=txt[1])
-            bot.sendMessage(chat_id=msg.chat.id,text= "Thanks for the input")
+            fin_resp = "Thanks for the input"
         else:
-            bot.sendMessage(chat_id=msg.chat.id,text= "Please use following format\n/suggestions Yout-Suggestion")
+            fin_resp= "Please use following format\n/suggestions Yout-Suggestion"
     elif txt[0] == '/memes':
-        resp = rand_memes()
+        resp = get_memes()
         if resp=="done":
             file = open("meme.jpg", 'rb')
             bot.sendPhoto(msg.chat.id, file)
             file.close()
     elif txt[0] == '/bugdata':
-        bot.sendMessage(chat_id=msg.chat.id, text= getBugData())
+        fin_resp = getBugData()
     elif txt[0] == '/sugdata':
-        bot.sendMessage(chat_id=msg.chat.id, text= getSuggestionData())
+        fin_resp= getSuggestionData()
     elif txt[0] == '/short':
         if len(txt) != 1:
-            bot.sendMessage(chat_id=msg.chat.id, text= "Shortened URL : "+shorten_url(txt[1]))
+            fin_resp= "Shortened URL : "+shorten_url(txt[1])
         else:
-            bot.sendMessage(chat_id=msg.chat.id, text= "Please use following format\n/short LONGURL")
+            fin_resp= "Please use following format\n/short LONGURL"
+    elif txt[0] == '/news':
+        fin_resp= get_news()
+    elif txt[0] == '/wiki':
+        if len(txt) != 1:
+            fin_resp=get_wiki(txt[1])
+        else:
+            fin_resp = "Please use following format\n/wiki Query"
+    elif txt[0] == '/quotes':
+        fin_resp = get_quotes()
+    bot.sendMessage(chat_id=msg.chat.id, text=fin_resp)
     return "Ok"
 
 
-TOKEN = os.environ['TOKEN'] #"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #
-URL = os.environ['URL']
+TOKEN = "452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #os.environ['TOKEN']#
+#URL = os.environ['URL']
 bot = telegram.Bot(token=TOKEN)
 
 
@@ -66,5 +81,5 @@ def work():
 
 
 if __name__ == '__main__':
-    bot.setWebhook(URL)
+    #bot.setWebhook(URL)
     app.run(host='0.0.0.0' , debug = True)

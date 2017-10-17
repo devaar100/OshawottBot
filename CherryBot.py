@@ -20,7 +20,7 @@ app = Flask(__name__)
 
 def handle(msg):
     print(msg)
-    txt = msg.text.split(' ',1)
+    txt = msg['text'].split(' ',1)
     fin_resp = ''
     if txt[0] == '/start':
         fin_resp = welcome()
@@ -71,7 +71,7 @@ def handle(msg):
             fin_resp = "Please use following format\n/wiki Query"
     elif txt[0] == '/quotes':
         fin_resp = get_quotes()
-    bot.sendMessage(chat_id=msg.chat.id, text=fin_resp)
+    bot.sendMessage(chat_id=msg['chat']['id'], text=fin_resp)
     return "Ok"
 
 

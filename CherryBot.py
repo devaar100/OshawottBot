@@ -44,7 +44,7 @@ def handle(msg):
         resp = get_memes()
         if resp=="done":
             file = open("meme.jpg", 'rb')
-            bot.sendPhoto(msg.chat.id, file)
+            bot.sendPhoto(msg['chat']['id'], file)
             file.close()
     elif txt[0] == '/bugdata':
         fin_resp = getBugData()
@@ -58,11 +58,11 @@ def handle(msg):
     elif txt[0] == '/news':
         fin_resp= get_news()
         for i in range(3):
-            bot.sendMessage(msg.chat.id, fin_resp[i])
+            bot.sendMessage(msg['chat']['id'], fin_resp[i])
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="morenews")]
         ])
-        bot.sendMessage(msg.chat.id, 'Load More', reply_markup=keyboardNews)
+        bot.sendMessage(msg['chat']['id'], 'Load More', reply_markup=keyboardNews)
         fin_resp = "Press Above To Load More News"
     elif txt[0] == '/wiki':
         if len(txt) != 1:

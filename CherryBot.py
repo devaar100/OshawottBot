@@ -87,7 +87,7 @@ def handle(msg):
     elif txt[0] == '/song':
         if len(txt)!=1:
             fin_resp = find_song(txt[1])
-            for i in fin_resp:
+            for i in fin_resp[:3]:
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
             fin_resp=''
         else:
@@ -111,8 +111,8 @@ def callback_query(msg):
         bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
 
 
-TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #
-URL = os.environ['URL']
+TOKEN = "452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #os.environ['TOKEN']#
+#URL = os.environ['URL']
 bot = telepot.Bot(token=TOKEN)
 
 inc_upd_queue = Queue() #queue to handle all incoming updates
@@ -132,5 +132,5 @@ def work():
 
 
 if __name__ == '__main__':
-    bot.setWebhook(URL)
+    #bot.setWebhook(URL)
     app.run(host='0.0.0.0' , debug = True)

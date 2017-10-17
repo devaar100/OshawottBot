@@ -7,8 +7,11 @@ What can I do for you ?
 
 /jokes for some tummy ticklers
 /memes for funny memes
-/short LONGURL for shortening url
+/quotes for wisdomful lines
+/wiki keyword for wikisearch
 /news for current happenings
+/short longurl for shortening url
+
 
 
 Have some feedback or us ?
@@ -18,10 +21,23 @@ Wanna suggest improvements ?
 /suggestions for some valuable input
 
 
-The source code for the bot is available at - 
+Check out the code at - 
 https://github.com/devaar100/OshawottBot
+
+
+Get in touch with me 
+/contact message 
+"""
+
+rate_msg = """
+Rate Friday Bot By Clicking Below
+:-)
+http://telegram.me/storebot?start=oshawottbot
 """
 
 
 def welcome():
     return welcome_msg
+
+def rate():
+    return rate_msg

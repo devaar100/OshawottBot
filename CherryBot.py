@@ -11,6 +11,7 @@ from modules.url import *
 from modules.news import *
 from modules.wiki import *
 from modules.quotes import *
+from modules.media import *
 from telepot.namedtuple import *
 import os
 
@@ -71,6 +72,26 @@ def handle(msg):
             fin_resp = "Please use following format\n/wiki Query"
     elif txt[0] == '/quotes':
         fin_resp = get_quotes()
+    elif txt[0] == '/contact':
+        if len(txt)!=1:
+            bot.sendMessage(chat_id=447553922, text="Contact message from "+msg['from'].get('username')+" :\n"+txt[1])
+            fin_resp = "You will be contacted soon"
+        else:
+            fin_resp = "No message provided"
+    elif txt[0].lower() in ['hi','hello','hey']:
+        fin_resp = "Hi "+msg['from'].get('username')+'\nLets have fun :D'
+    elif txt[0].lower() in ['thanks','bye','love']:
+        fin_resp = "Glad to be of help\n/rate to show your appreciation for the bot"
+    elif txt[0] == '/rate':
+        fin_resp = rate_msg
+    elif txt[0] == '/song':
+        if len(txt)!=1:
+            fin_resp = find_song(txt[1])
+            for i in fin_resp:
+                bot.sendMessage(msg['chat']['id'], text=i)
+            fin_resp=''
+        else:
+            fin_resp = "Please provide songname"
     if fin_resp != '':
         bot.sendMessage(chat_id=msg['chat']['id'], text=fin_resp)
     return "Ok"

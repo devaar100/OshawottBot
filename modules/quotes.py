@@ -7,5 +7,5 @@ def get_quotes():
     req = 'https://www.brainyquote.com/quotes/keywords/smart.html'
     res = requests.get(req)
     soup = BS(res.text, 'html.parser')
-    list = soup.find_all('a',{'class':'b-qt qt_391398 oncl_q'})
+    list = soup.find_all('a',{'class':' b-qt '})
     return random.choice(list).text

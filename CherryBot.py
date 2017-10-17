@@ -107,13 +107,14 @@ def handle(msg):
 def callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
     print(str(query_id)+" "+str(from_id)+" "+str(query_data))
+
     if query_data == "morenews":
         bot.answerCallbackQuery(callback_query_id=query_id, text='Loading More News')
         response = get_news()[2:]
         bot.sendMessage(from_id, random.choice(response))
 
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
-            [InlineKeyboardButton(text='More News', callback_data="norenews")]
+            [InlineKeyboardButton(text='More News', callback_data="morenews")]
         ])
         bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
     else:

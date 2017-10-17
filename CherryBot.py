@@ -1,8 +1,8 @@
 import telepot
 try:
-    from Queue import Queue
-except ImportError:
     from queue import Queue
+except ImportError:
+    from Queue import Queue
 from flask import Flask , request
 from modules.greet import *
 from modules.jokes import *

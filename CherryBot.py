@@ -62,7 +62,7 @@ def handle(msg):
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="morenews")]
         ])
-        bot.sendMessage(msg['chat']['id'],None, reply_markup=keyboardNews)
+        bot.sendMessage(msg['chat']['id'],text="Click above button for more NEWS", reply_markup=keyboardNews)
     elif txt[0] == '/wiki':
         if len(txt) != 1:
             fin_resp=get_wiki(txt[1])
@@ -85,7 +85,7 @@ def callback_query(msg):
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="norenews")]
         ])
-        bot.sendMessage(chat_id= user_id,text=None, reply_markup=keyboardNews)
+        bot.sendMessage(chat_id= user_id,text="Click above button for more NEWS", reply_markup=keyboardNews)
 
 
 TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #

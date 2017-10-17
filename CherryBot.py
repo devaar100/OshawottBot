@@ -89,15 +89,16 @@ def handle(msg):
             fin_resp = find_song(txt[1])
             for i in fin_resp[:3]:
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
-                keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
-                    [InlineKeyboardButton(text='Download 1st option', callback_data=str(0)+" dwn_song")],
-                    [InlineKeyboardButton(text='Download 2nd option', callback_data=str(1)+" dwn_song")],
-                    [InlineKeyboardButton(text='Download 3rd option', callback_data=str(2)+" dwn_song")]
-                ])
-                bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
-            fin_resp=''
-        else:
-            fin_resp = "Please provide songname"
+
+            keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text='Download 1st option', callback_data=str(0)+" dwn_song")],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(1)+" dwn_song")],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(2)+" dwn_song")]
+            ])
+            bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
+        fin_resp=''
+    else:
+        fin_resp = "Please provide songname"
     if fin_resp != '':
         bot.sendMessage(chat_id=msg['chat']['id'], text=fin_resp)
     return "Ok"
@@ -107,7 +108,7 @@ def callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
     print(str(query_id)+" "+str(from_id)+" "+str(query_data))
     if query_data == "morenews":
-        bot.answerCallbackQuery(query_id, text='Loading More News')
+        bot.answerCallbackQuery(callback_query_id=query_id, text='Loading More News')
         response = get_news()[2:]
         bot.sendMessage(from_id, random.choice(response))
 
@@ -116,7 +117,7 @@ def callback_query(msg):
         ])
         bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
     else:
-        bot.answerCallbackQuery(from_id, text="Donwloading your song")
+        bot.answerCallbackQuery(callback_query_id=query_id, text="Donwloading your song")
         name = download_song(query_data.split(' ')[0])
         song = open(name,'rb')
         bot.sendAudio(chat_id= from_id, audio= song)

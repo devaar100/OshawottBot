@@ -7,6 +7,7 @@ What can I do for you ?
 
 /jokes for some tummy ticklers
 /memes for funny memes
+/song SONGNAME for songs
 /quotes for wisdomful lines
 /wiki keyword for wikisearch
 /news for current happenings

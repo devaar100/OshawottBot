@@ -88,7 +88,7 @@ def handle(msg):
         if len(txt)!=1:
             fin_resp = find_song(txt[1])
             for i in fin_resp:
-                bot.sendMessage(msg['chat']['id'], text=i)
+                bot.sendMessage(chat_id=msg['chat']['id'], text=i)
             fin_resp=''
         else:
             fin_resp = "Please provide songname"

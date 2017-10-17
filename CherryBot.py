@@ -1,5 +1,8 @@
-import telepot , random
-from Queue import Queue
+import telepot
+try:
+    from Queue import Queue
+except ImportError:
+    from queue import Queue
 from flask import Flask , request
 from modules.greet import *
 from modules.jokes import *

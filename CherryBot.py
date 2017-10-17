@@ -39,7 +39,7 @@ def handle(msg):
             bot.sendMessage(chat_id=447553922, text=txt[1])
             fin_resp = "Thanks for the input"
         else:
-            fin_resp= "Please use following format\n/suggestions Yout-Suggestion"
+            fin_resp= "Please use following format\n/suggestions Your-Suggestion"
     elif txt[0] == '/memes':
         resp = get_memes()
         if resp=="done":
@@ -62,8 +62,7 @@ def handle(msg):
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="morenews")]
         ])
-        bot.sendMessage(msg['chat']['id'], 'Load More', reply_markup=keyboardNews)
-        fin_resp = "Press Above To Load More News"
+        bot.sendMessage(msg['chat']['id'],None, reply_markup=keyboardNews)
     elif txt[0] == '/wiki':
         if len(txt) != 1:
             fin_resp=get_wiki(txt[1])
@@ -71,21 +70,22 @@ def handle(msg):
             fin_resp = "Please use following format\n/wiki Query"
     elif txt[0] == '/quotes':
         fin_resp = get_quotes()
-    bot.sendMessage(chat_id=msg['chat']['id'], text=fin_resp)
+    if fin_resp != '':
+        bot.sendMessage(chat_id=msg['chat']['id'], text=fin_resp)
     return "Ok"
 
 
 def callback_query(msg):
-    query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
+    user_id, query_data = telepot.glance(msg, flavor='callback_query')
     if query_data == "morenews":
-        bot.answerCallbackQuery(query_id, text='Loading More News')
-        response = get_news()
-        bot.sendMessage(from_id, random.choice(response).text)
+        bot.answerCallbackQuery(user_id, text='Loading More News')
+        response = get_news()[2:]
+        bot.sendMessage(user_id, random.choice(response).text)
 
         keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
             [InlineKeyboardButton(text='More News', callback_data="norenews")]
         ])
-        bot.sendMessage(from_id, 'Load More', reply_markup=keyboardNews)
+        bot.sendMessage(chat_id= user_id,text=None, reply_markup=keyboardNews)
 
 
 TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #

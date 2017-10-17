@@ -8,4 +8,4 @@ def get_news():
     list = []
     for news in resp:
         list.append(news['url'])
-    return list[:3]
+    return list

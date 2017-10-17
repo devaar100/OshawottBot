@@ -6,6 +6,7 @@ from modules.url import *
 from modules.news import *
 from modules.wiki import *
 from modules.quotes import *
+from telepot.namedtuple import *
 import telegram
 import os
 
@@ -51,6 +52,13 @@ def handle(msg):
             fin_resp= "Please use following format\n/short LONGURL"
     elif txt[0] == '/news':
         fin_resp= get_news()
+        for i in range(3):
+            bot.sendMessage(msg.chat.id, fin_resp[i])
+        keyboardNews = InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text='More News', callback_data="newsMore")]
+        ])
+        bot.sendMessage(msg.chat.id, 'Load More', reply_markup=keyboardNews)
+        fin_resp = "Press Above To Load More News"
     elif txt[0] == '/wiki':
         if len(txt) != 1:
             fin_resp=get_wiki(txt[1])
@@ -62,8 +70,8 @@ def handle(msg):
     return "Ok"
 
 
-TOKEN = "452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #os.environ['TOKEN']#
-#URL = os.environ['URL']
+TOKEN = os.environ['TOKEN']#"452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #
+URL = os.environ['URL']
 bot = telegram.Bot(token=TOKEN)
 
 
@@ -81,5 +89,5 @@ def work():
 
 
 if __name__ == '__main__':
-    #bot.setWebhook(URL)
+    bot.setWebhook(URL)
     app.run(host='0.0.0.0' , debug = True)

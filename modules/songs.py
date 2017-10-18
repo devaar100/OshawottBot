@@ -18,12 +18,12 @@ def find_lyrics(songname):
     return list
 
 
-def download_lyrics(url):
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
-    resp = requests.get(str(url),headers=headers,stream=True)
-    soup = BS(resp.text,'html.parser')
-    data = soup.find_all('div',{'class':'col-lg-8'})[0]
-    return data.select('div')[6].text
+# def download_lyrics(url):
+#     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
+#     resp = requests.get(url=str(url),headers=headers,stream=True)
+#     soup = BS(resp.text,'html.parser')
+#     data = soup.find_all('div',{'class':'col-lg-8'})[0]
+#     return data.select('div')[6].text
 
 
 def find_song(songname):

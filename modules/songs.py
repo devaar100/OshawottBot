@@ -18,8 +18,9 @@ def find_lyrics(songname):
 
 
 def download_lyrics(url):
+    print(url)
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
-    resp = requests.get(url,headers=headers)
+    resp = requests.get(str(url),headers=headers)
     soup = BS(resp.text,'html.parser')
     data = soup.find_all('div',{'class':'col-lg-8'})[0]
     return data.select('div')[6].text

@@ -156,7 +156,6 @@ bot.message_loop({'chat': handle, 'callback_query': callback_query}, source=inc_
 
 @app.route('/')
 def hello_world():
-    find_lyrics("Despacito")
     return 'Hello World!'
 
 

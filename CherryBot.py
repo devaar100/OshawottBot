@@ -89,6 +89,7 @@ def handle(msg):
             fin_resp = find_lyrics(txt[1])
             for i in fin_resp:
                 bot.sendMessage(chat_id=msg['chat']['id'],text=i)
+
             keyboardLyrics = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0]) + ' lyrics')],
                 [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1]) + ' lyrics')],
@@ -96,7 +97,10 @@ def handle(msg):
                 [InlineKeyboardButton(text='Download 4th option', callback_data=str(fin_resp[3]) + ' lyrics')],
                 [InlineKeyboardButton(text='Download 5th option', callback_data=str(fin_resp[4]) + ' lyrics')]
             ])
-            bot.sendMessage(chat_id=msg['chat']['id'],text="Choose to get lyrics",reply_markup= keyboardLyrics)
+            bot.sendMessage(msg['chat']['id'],text="Choose to get lyrics",reply_markup= keyboardLyrics)
+            fin_resp=''
+        else:
+            fin_resp = "Please provide songname"
     elif txt[0] == '/song':
         if len(txt)!=1:
             fin_resp = find_song(txt[1])

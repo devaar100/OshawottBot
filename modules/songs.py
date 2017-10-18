@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as BS
 import os
-
+from modules.url import *
 
 def find_lyrics(songname):
     url = 'https://search.azlyrics.com/search.php?q='+songname
@@ -9,17 +9,13 @@ def find_lyrics(songname):
     soup = BS(resp.text,'html.parser')
     items = soup.find_all('td',{'class':'text-left visitedlyr'})
     list = []
-    for i in items:
-        c = 0
-        if c >= 3:
-            break
-        if len(str(i.select('a')[0]['href'])) < 64:
-            c+=1
-            list.append(
-                str(i.select('a')[0].text)+'\n'+
-                str(i.select('b')[1].text)+'\n'+
-                str(i.select('a')[0]['href'])
-            )
+    for i in items[:3]:
+        link = shorten_url(i.select('a')[0]['href'])
+        list.append(
+        str(i.select('a')[0].text)+'\n'+
+        str(i.select('b')[1].text)+'\n'+
+        str(link)
+        )
     return list
 
 

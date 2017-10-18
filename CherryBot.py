@@ -11,7 +11,7 @@ from modules.url import *
 from modules.news import *
 from modules.wiki import *
 from modules.quotes import *
-from modules.media import *
+from modules.songs import *
 from telepot.namedtuple import *
 import os
 
@@ -84,6 +84,17 @@ def handle(msg):
         fin_resp = "Glad to be of help\n/rate to show your appreciation for the bot"
     elif txt[0] == '/rate':
         fin_resp = rate_msg
+    elif txt[0] == '/lyrics':
+        if len(txt)!=1:
+            fin_resp = find_lyrics(txt[1])
+            for i in fin_resp:
+                bot.sendMessage(chat_id=msg['chat']['id'],text=i)
+            keyboardLyrics = InlineKeyboardMarkup(inline_keyboard=[
+                [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0]) + ' lyrics'),InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[2]) + ' lyrics'),InlineKeyboardButton(text='Download 4th option', callback_data=str(fin_resp[3]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(fin_resp[4]) + ' lyrics')]
+            ])
+            bot.sendMessage(chat_id=msg['chat']['id'],text="Choose to get lyrics",reply_markup= keyboardLyrics)
     elif txt[0] == '/song':
         if len(txt)!=1:
             fin_resp = find_song(txt[1])
@@ -106,7 +117,6 @@ def handle(msg):
 
 def callback_query(msg):
     query_id, from_id, query_data = telepot.glance(msg, flavor='callback_query')
-    print(str(query_id)+" "+str(from_id)+" "+str(query_data))
 
     if query_data == "morenews":
         bot.answerCallbackQuery(callback_query_id=query_id, text='Loading More News')
@@ -118,12 +128,18 @@ def callback_query(msg):
         ])
         bot.sendMessage(chat_id= from_id ,text="Click below for more", reply_markup=keyboardNews)
     else:
-        bot.answerCallbackQuery(callback_query_id=query_id, text="Fetching your song")
-        name = download_song(query_data.split(' ')[0])
-        bot.answerCallbackQuery(callback_query_id=query_id, text="Donwloading your song")
-        song = open(name,'rb')
-        bot.sendAudio(chat_id= from_id, audio= song)
-        song.close()
+        query , type = query_data.split(' ')
+        if type == 'song':
+            bot.answerCallbackQuery(callback_query_id=query_id, text="Fetching your song")
+            name = download_song(query_data.split(' ')[0])
+            bot.answerCallbackQuery(callback_query_id=query_id, text="Donwloading your song")
+            song = open(name,'rb')
+            bot.sendAudio(chat_id= from_id, audio= song)
+            song.close()
+        else:
+            bot.answerCallbackQuery(callback_query_id=query_id, text="Fetching lyrics")
+            lyr = download_lyrics(query_data.split(' ')[0])
+            bot.sendMessage(chat_id=from_id, text=lyr)
 
 
 TOKEN = "452803545:AAGRrJpayYMIHqam7F9fXV7bnYR4TvfDe88" #os.environ['TOKEN']#
@@ -136,6 +152,7 @@ bot.message_loop({'chat': handle, 'callback_query': callback_query}, source=inc_
 
 @app.route('/')
 def hello_world():
+    find_lyrics("Despacito")
     return 'Hello World!'
 
 

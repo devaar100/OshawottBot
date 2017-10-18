@@ -9,12 +9,17 @@ def find_lyrics(songname):
     soup = BS(resp.text,'html.parser')
     items = soup.find_all('td',{'class':'text-left visitedlyr'})
     list = []
-    for i in items[:5]:
-        list.append(
-            str(i.select('a')[0].text)+'\n'+
-            str(i.select('b')[1].text)+'\n'+
-            str(i.select('a')[0]['href'])
-        )
+    for i in items:
+        c = 0
+        if len(str(i.select('a')[0]['href'])) < 64:
+            if c >=3:
+                break
+            c+=1
+            list.append(
+                str(i.select('a')[0].text)+'\n'+
+                str(i.select('b')[1].text)+'\n'+
+                str(i.select('a')[0]['href'])
+            )
     return list
 
 

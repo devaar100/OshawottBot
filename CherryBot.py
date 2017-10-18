@@ -88,7 +88,7 @@ def handle(msg):
         if len(txt)!=1:
             fin_resp = find_lyrics(txt[1])
             for i in fin_resp[:3]:
-                bot.sendMessage(chat_id=msg['chat']['id'],text=fin_resp[i].split('\n')[0]+"\nby "+fin_resp[i].split('\n')[1])
+                bot.sendMessage(chat_id=msg['chat']['id'],text=i.split('\n')[0]+"\nby "+i.split('\n')[1])
 
             keyboardLyrics = InlineKeyboardMarkup(inline_keyboard=[
                 [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0].split('\n')[2]) + ' ly')],

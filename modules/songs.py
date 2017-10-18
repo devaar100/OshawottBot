@@ -11,9 +11,9 @@ def find_lyrics(songname):
     list = []
     for i in items:
         c = 0
+        if c >= 3:
+            break
         if len(str(i.select('a')[0]['href'])) < 64:
-            if c >=3:
-                break
             c+=1
             list.append(
                 str(i.select('a')[0].text)+'\n'+

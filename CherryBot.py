@@ -91,9 +91,9 @@ def handle(msg):
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
 
             keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text='Download 1st option', url=download_song(fin_resp[0]))],
-                [InlineKeyboardButton(text='Download 2nd option', url=download_song(fin_resp[1]))],
-                [InlineKeyboardButton(text='Download 3rd option', url=download_song(fin_resp[2]))]
+                [InlineKeyboardButton(text='Download 1st option', callback_data=download_song(fin_resp[0])+' song')],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=download_song(fin_resp[1])+' song')],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=download_song(fin_resp[2])+' song')]
             ])
             bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
         fin_resp=''

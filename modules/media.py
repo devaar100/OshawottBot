@@ -1,5 +1,4 @@
 import requests
-import os
 from bs4 import BeautifulSoup as BS
 
 
@@ -11,22 +10,20 @@ def find_song(songname):
     return list
 
 
-def download_song(dlink):
-    link = 'http://www.youtubeinmp3.com/fetch/?format=JSON&video=' + dlink
-    res = requests.get(link)
-    link = res.json()['link']
-    return link
+def download_song(link):
+    link = 'http://www.youtubeinmp3.com/fetch/?format=JSON&video=' + link
 
-    # song_name = os.path.abspath('') + 'songs/' + song_name  + '.mp3'
-    # if os.path.isfile(song_name):
-    #     return song_name
-    # else:
-    #     res = requests.get(link)
-    #     file = open(song_name, 'wb')
-    #
-    #     for i in res.iter_content(10000):
-    #         file.write(i)
-    #
-    #     file.close()
-    #     return song_name
+    res = requests.get(link)
+    download_link = res.json()['link']
+    song_name = res.json()['title']
+    res = requests.get(download_link)
+    file = open(song_name, 'wb')
+
+    for i in res.iter_content(10000):
+        file.write(i)
+
+    file.close()
+    return song_name
+
+
 

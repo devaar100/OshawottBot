@@ -31,7 +31,7 @@ Get in touch with me
 """
 
 rate_msg = """
-Rate Friday Bot By Clicking Below
+Rate Oshawott Bot By Clicking Below
 :-)
 http://telegram.me/storebot?start=oshawottbot
 """

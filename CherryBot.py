@@ -74,12 +74,12 @@ def handle(msg):
         fin_resp = get_quotes()
     elif txt[0] == '/contact':
         if len(txt)!=1:
-            bot.sendMessage(chat_id=447553922, text="Contact message from "+msg['from'].get('username')+" :\n"+txt[1])
+            bot.sendMessage(chat_id=447553922, text="Contact message from "+str(msg['from'].get('username'))+" :\n"+str(txt[1]))
             fin_resp = "You will be contacted soon"
         else:
             fin_resp = "No message provided"
     elif txt[0].lower() in ['hi','hello','hey']:
-        fin_resp = "Hi "+msg['from'].get('username')+'\nLets have fun :D'
+        fin_resp = 'Hi '+str(msg['from'].get('username'))+'\nLets have fun :D'
     elif txt[0].lower() in ['thanks','bye','love']:
         fin_resp = "Glad to be of help\n/rate to show your appreciation for the bot"
     elif txt[0] == '/rate':
@@ -91,9 +91,9 @@ def handle(msg):
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
 
             keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text='Download 1st option',url= fin_resp[0] ,callback_data=str(0)+" dwn_song")],
-                [InlineKeyboardButton(text='Download 2nd option',url= fin_resp[0] , callback_data=str(1)+" dwn_song")],
-                [InlineKeyboardButton(text='Download 3rd option',url= fin_resp[0] , callback_data=str(2)+" dwn_song")]
+                [InlineKeyboardButton(text='Download 1st option', callback_data=str(0)+" dwn_song")],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(1)+" dwn_song")],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(2)+" dwn_song")]
             ])
             bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
         fin_resp=''

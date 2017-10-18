@@ -10,11 +10,11 @@ def find_lyrics(songname):
     items = soup.find_all('td',{'class':'text-left visitedlyr'})
     list = []
     for i in items[:5]:
-        list.append({
-            'name':i.select('a')[0].text,
-            'artist':i.select('b')[1].text,
-            'link':i.select('a')[0]['href']
-        })
+        list.append(
+            str(i.select('a')[0].text)+'\n'+
+            str(i.select('b')[1].text)+'\n'+
+            str(i.select('a')[0]['href'])
+        )
     return list
 
 

@@ -90,9 +90,11 @@ def handle(msg):
             for i in fin_resp:
                 bot.sendMessage(chat_id=msg['chat']['id'],text=i)
             keyboardLyrics = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0]) + ' lyrics'),InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1]) + ' lyrics')],
-                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[2]) + ' lyrics'),InlineKeyboardButton(text='Download 4th option', callback_data=str(fin_resp[3]) + ' lyrics')],
-                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(fin_resp[4]) + ' lyrics')]
+                [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(fin_resp[2]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 4th option', callback_data=str(fin_resp[3]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 5th option', callback_data=str(fin_resp[4]) + ' lyrics')]
             ])
             bot.sendMessage(chat_id=msg['chat']['id'],text="Choose to get lyrics",reply_markup= keyboardLyrics)
     elif txt[0] == '/song':

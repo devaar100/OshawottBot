@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup as BS
 from modules.url import *
+import requests
 
 def find_lyrics(songname):
     url = 'https://search.azlyrics.com/search.php?q='+songname
@@ -18,9 +19,8 @@ def find_lyrics(songname):
 
 
 def download_lyrics(url):
-    print(url)
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.0; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0'}
-    resp = requests.get(str(url),headers=headers)
+    resp = requests.get(str(url),headers=headers,stream=True)
     soup = BS(resp.text,'html.parser')
     data = soup.find_all('div',{'class':'col-lg-8'})[0]
     return data.select('div')[6].text

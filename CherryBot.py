@@ -91,9 +91,9 @@ def handle(msg):
                 bot.sendMessage(chat_id=msg['chat']['id'],text=i)
 
             keyboardLyrics = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0].split(' ')[2]) + ' lyrics')],
-                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1].split(' ')[2]) + ' lyrics')],
-                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(fin_resp[2].split(' ')[2]) + ' lyrics')]
+                [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0].split('\n')[2]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1].split('\n')[2]) + ' lyrics')],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(fin_resp[2].split('\n')[2]) + ' lyrics')]
             ])
             bot.sendMessage(msg['chat']['id'],text="Choose to get lyrics",reply_markup= keyboardLyrics)
             fin_resp=''

@@ -14,7 +14,6 @@ What can I do for you ?
 /short longurl for shortening url
 
 
-
 Have some feedback or us ?
 Notify about bugs like -
 /bugs THE-BUG to notify bugs

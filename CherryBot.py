@@ -91,12 +91,12 @@ def handle(msg):
                 bot.sendMessage(chat_id=msg['chat']['id'], text=i)
 
             keyboardMusic = InlineKeyboardMarkup(inline_keyboard=[
-                [InlineKeyboardButton(text='Download 1st option', callback_data=str(download_song(fin_resp[0]))+' song')],
-                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(download_song(fin_resp[1]))+' song')],
-                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(download_song(fin_resp[2]))+' song')]
+                [InlineKeyboardButton(text='Download 1st option', callback_data=str(fin_resp[0])+' song')],
+                [InlineKeyboardButton(text='Download 2nd option', callback_data=str(fin_resp[1])+' song')],
+                [InlineKeyboardButton(text='Download 3rd option', callback_data=str(fin_resp[2])+' song')]
             ])
             bot.sendMessage(msg['chat']['id'],text='Select song to download', reply_markup=keyboardMusic)
-        fin_resp=''
+            fin_resp=''
     else:
         fin_resp = "Please provide songname"
     if fin_resp != '':

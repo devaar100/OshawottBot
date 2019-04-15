@@ -74,7 +74,7 @@ def handle(msg):
         fin_resp = get_quotes()
     elif txt[0] == '/contact':
         if len(txt)!=1:
-            bot.sendMessage(chat_id=447553922, text="Contact message from "+str(msg['from']['first_name'])+" :\n"+str(txt[1]))
+            bot.sendMessage(chat_id=768328250, text="Contact message from "+str(msg['from']['first_name'])+" :\n"+str(txt[1]))
             fin_resp = "You will be contacted soon"
         else:
             fin_resp = "No message provided"

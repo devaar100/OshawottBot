@@ -31,5 +31,5 @@ telepot==12.3
 urllib3==1.22
 virtualenv==15.1.0
 virtualenv-clone==0.2.6
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 wikipedia==1.4.0
